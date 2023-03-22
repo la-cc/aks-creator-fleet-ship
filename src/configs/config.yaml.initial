@@ -1,0 +1,13 @@
+---
+# Azure Backend for Terraform related data
+azure_backend: {}
+
+# Azure Kubernetes Cluster related data
+clusters:
+  - name: <valiant>
+    stage: <development>
+    azure_public_dns: {}
+    node_pools: {}
+
+# Azure Devops Pipeline related data
+azure_devops_pipeline: {}
