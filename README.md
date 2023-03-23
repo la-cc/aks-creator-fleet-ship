@@ -181,6 +181,7 @@ azure_backend:
 clusters:
   - name: <valiant>
     stage: <development>
+    admin_list: ["8a7sdwd", "47243892"]
     azure_public_dns:
       enable: true
       azure_cloud_zone: <"your-domain.de">

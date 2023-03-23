@@ -13,6 +13,7 @@ config_schema = Schema({
         {
             "name": str,
             "stage": str,
+            Optional("admin_list", default=[]): list,
             Optional("azure_public_dns"): {
                 Optional("enable", default=False): bool,
                 Optional("azure_cloud_zone"): str,

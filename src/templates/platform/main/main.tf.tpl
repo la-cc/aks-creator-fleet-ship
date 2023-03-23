@@ -23,7 +23,7 @@ module "network" {
 }
 
 module "kubernetes" {
-  source = "github.com/la-cc/terraform-azure-kubernetes?ref=1.1.1"
+  source = "github.com/la-cc/terraform-azure-kubernetes?ref=1.1.2"
 
   aks_name               = format("aks-%s-%s", var.name, terraform.workspace)
   resource_group_name    = module.resource_group.name
@@ -42,6 +42,7 @@ module "kubernetes" {
   local_account_disabled = var.local_account_disabled
   enable_aad_rbac        = var.enable_aad_rbac
   admin_list             = var.admin_list
+  load_balancer_sku      = var.load_balancer_sku
   tags                   = var.tags
 
   depends_on = [
