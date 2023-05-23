@@ -73,11 +73,6 @@ variable "max_pods_per_node" {
   default = 45
 }
 
-variable "node_pool_count" {
-
-  type    = number
-}
-
 variable "lock_name" {
   type        = string
   description = "Specifies the name of the Management Lock. Changing this forces a new resource to be created."
@@ -108,6 +103,57 @@ variable "network_policy" {
   type    = string
   default = "calico"
 }
+
+variable "node_pool_profile_name" {
+  type        = string
+  default     = "default"
+  description = "The name which should be used for the default Kubernetes Node Pool. Changing this forces a new resource to be created."
+}
+
+variable "enable_auto_scaling" {
+  type        = bool
+  default     = false
+  description = "Should the Kubernetes Auto Scaler be enabled for this Node Pool? Defaults to false."
+}
+
+variable "node_pool_count" {
+  type        = number
+  default     = 3
+  description = <<-EOT
+    If enable_auto_scaling is set to true, this variable:
+        - is optional.
+        - specifies the initial number of nodes which should exist in the Node Pool.
+
+    If enable_auto_scaling is set to false, this variable:
+        - is required.
+        - specifies the fixed number of nodes which should exist in the Node Pool.
+    EOT
+}
+
+variable "node_pool_min_count" {
+  type        = number
+  default     = 2
+  description = <<-EOT
+    If enable_auto_scaling is set to true, this variable:
+        - is required.
+        - specifies the minimum number of nodes which should exist in the Node Pool.
+
+    If enable_auto_scaling is set to false, this variable should not be set.
+    EOT
+}
+
+variable "node_pool_max_count" {
+  type        = number
+  default     = 5
+  description = <<-EOT
+    If enable_auto_scaling is set to true, this variable:
+        - is required.
+        - specifies the maximum number of nodes which should exist in the Node Pool.
+
+    If enable_auto_scaling is set to false, this variable should not be set.
+    EOT
+}
+
 
 variable "enable_node_pools" {
 

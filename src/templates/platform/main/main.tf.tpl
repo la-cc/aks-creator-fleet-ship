@@ -34,7 +34,11 @@ module "kubernetes" {
   kubernetes_version     = var.kubernetes_version
   vm_size                = var.vm_size
   max_pods_per_node      = var.max_pods_per_node
+  node_pool_profile_name = var.node_pool_profile_name
+  enable_auto_scaling    = var.enable_auto_scaling
   node_pool_count        = var.node_pool_count
+  node_pool_min_count    = var.node_pool_min_count
+  node_pool_max_count    = var.node_pool_max_count
   network_policy         = var.network_policy
   network_plugin         = var.network_plugin
   enable_node_pools      = var.enable_node_pools

@@ -20,6 +20,9 @@ config_schema = Schema({
             },
             # default node-pool
             Optional("node_pool_count", default=3): int,
+            Optional("enable_auto_scaling", default=False): bool,
+            Optional("node_pool_min_count", default=2): int,
+            Optional("node_pool_max_count", default=5): int,
             Optional("vm_size", default="Standard_B4ms"): str,
             Optional("kubernetes_version", default="1.24.9"): str,
             Optional("orchestrator_version", default="1.24.9"): str,
