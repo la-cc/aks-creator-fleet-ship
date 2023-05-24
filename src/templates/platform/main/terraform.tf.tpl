@@ -1,13 +1,13 @@
-{% if azure_backend.enable %}
+
 terraform {
   backend "azurerm" {
-    resource_group_name  = "{{ azure_backend.resource_group_name_backend }}"
-    storage_account_name = "{{ azure_backend.storage_account_name }}"
+    resource_group_name  = "rg-valiant-tf-backend"
+    storage_account_name = "savalianttfbackend"
     container_name       = "tfstate"
     key                  = "terraform.tfstate" # refers to the file name
   }
 }
-{% endif %}
+
 
 terraform {
   required_version = ">= 1.3.0"
@@ -16,13 +16,12 @@ terraform {
 
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = ">= 3.46.0"
+      version = ">= 3.57.0"
     }
 
     azuread = {
       source  = "hashicorp/azuread"
-      version = ">= 2.36.0"
+      version = ">= 2.39.0"
     }
   }
 }
-

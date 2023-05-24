@@ -10,6 +10,7 @@ clusters:
     node_pool_count: 3
     node_pool_min_count: 2
     node_pool_max_count: 5
+    granted_object_ids: {}
     azure_public_dns: {}
     node_pools: {}
 

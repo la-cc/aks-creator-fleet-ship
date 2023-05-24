@@ -6,17 +6,34 @@ variable "orchestrator_version" {
 
   type    = string
   default = "1.24.9"
+  description = <<-EOT
 
+  (Optional) Version of Kubernetes used for the Agents.
+  If not specified, the default node pool will be created with the version specified by kubernetes_version.
+  If both are unspecified, the latest recommended version will be used at provisioning time (but won't auto-upgrade).
+  AKS does not require an exact patch version to be specified, minor version aliases such as 1.22 are also supported.
+  The minor version's latest GA patch is automatically chosen in that case. More details can be found in
+
+  EOT
 }
 
 variable "kubernetes_version" {
   type    = string
   default = "1.24.9"
+  description = <<-EOT
+
+  (Optional) Version of Kubernetes specified when creating the AKS managed cluster.
+  If not specified, the latest recommended version will be used at provisioning time (but won't auto-upgrade).
+  AKS does not require an exact patch version to be specified, minor version aliases such as 1.22 are also supported.
+  The minor version's latest GA patch is automatically chosen in that case.
+
+  EOT
 }
 
 variable "location" {
   type    = string
   default = "westeurope"
+  description = "(Required) The location where the Managed Kubernetes Cluster should be created. Changing this forces a new resource to be created."
 
 }
 
@@ -65,12 +82,14 @@ variable "vm_size" {
 
   type    = string
   default = "Standard_B4ms"
+  description = "(Required) The size of the Virtual Machine, such as Standard_DS2_v2"
 
 }
 
 variable "max_pods_per_node" {
   type    = number
   default = 45
+  description = "(Optional) The maximum number of pods that can run on each agent. Changing this forces a new resource to be created."
 }
 
 variable "lock_name" {
@@ -95,6 +114,7 @@ variable "network_plugin" {
 
   type    = string
   default = "azure"
+  description = "(Required) Network plugin to use for networking. Currently supported values are azure, kubenet and none. Changing this forces a new resource to be created."
 
 }
 
@@ -102,6 +122,7 @@ variable "network_policy" {
 
   type    = string
   default = "calico"
+  description = "(Optional) Sets up network policy to be used with Azure CNI. Network policy allows us to control the traffic flow between pods. Currently supported values are calico and azure. Changing this forces a new resource to be created."
 }
 
 variable "node_pool_profile_name" {
@@ -199,4 +220,87 @@ variable "tags" {
     Owner       = "HSA"
     PoC         = "AKS"
   }
+}
+
+########## Azure Container Registries ##########
+
+variable "sku" {
+
+  type    = string
+  default = "Premium"
+  description = "(Required) The SKU name of the container registry. Possible values are Basic, Standard and Premium."
+}
+
+variable "admin_enabled" {
+
+  type    = bool
+  default = false
+  description = " (Optional) Specifies whether the admin user is enabled. Defaults to false."
+}
+
+
+########## Azure Key Vault ##########
+
+variable "granted_object_ids" {
+
+  type    = map(string)
+  default = {}
+}
+
+variable "network_acls" {
+
+  type = object({
+    bypass                     = string,
+    default_action             = string,
+    ip_rules                   = list(string),
+    virtual_network_subnet_ids = list(string),
+  })
+
+  default = {
+    bypass                     = "AzureServices"
+    default_action             = "Allow"
+    ip_rules                   = []
+    virtual_network_subnet_ids = []
+  }
+
+  description = "(Optional) A network_acls block as defined below"
+
+}
+
+variable "role_definition_name" {
+  type        = string
+  description = "The Scoped-ID of the Role Definition. Changing this forces a new resource to be created. Conflicts with role_definition_name"
+  default     = "Key Vault Administrator"
+}
+
+variable "certificate_permissions" {
+  type        = list(string)
+  description = "Optional list of permission"
+  default = [
+    "Get"
+  ]
+}
+
+variable "key_permissions" {
+  type        = list(string)
+  description = "Optional list of permission"
+  default = [
+    "Get"
+  ]
+}
+
+variable "secret_permissions" {
+  type        = list(string)
+  description = "Optional list of permission"
+  default = [
+    "Get", "List", "Set", "Delete", "Recover", "Purge", "Restore", "Backup"
+  ]
+}
+
+variable "storage_permissions" {
+  type        = list(string)
+  description = "Optional list of permission"
+  default = [
+    "Get"
+  ]
 }

@@ -4,6 +4,8 @@ data "azurerm_subscription" "current" {
 data "azurerm_client_config" "current" {
 }
 
+data "azuread_client_config" "current" {}
+
 
 data "azurerm_resource_group" "main" {
   name = module.resource_group.name
@@ -14,7 +16,7 @@ data "azurerm_resource_group" "main" {
 }
 
 data "azurerm_kubernetes_cluster" "main" {
-  name                = format("aks-%s-%s", var.name , terraform.workspace)
+  name                = format("aks-%s-%s", var.name, terraform.workspace)
   resource_group_name = module.resource_group.name
 
   depends_on = [

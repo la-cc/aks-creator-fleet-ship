@@ -56,3 +56,45 @@ module "kubernetes" {
 
 }
 
+
+
+module "resource_group_infra" {
+  source = "github.com/la-cc/terraform-azure-resource-group?ref=1.0.0"
+
+  name     = format("rg-%s-%s", var.name, "infrastructure")
+  location = var.location
+  tags     = var.tags
+
+}
+
+
+module "key_vault" {
+  source = "github.com/la-cc/terraform-azure-key-vault?ref=1.0.0"
+
+  name                = format("kv-%s-%s", var.name, "713")
+  resource_group_name = module.resource_group_infra.name
+  network_acls        = var.network_acls
+  granted_object_ids  = var.granted_object_ids
+
+  depends_on = [
+    module.resource_group_infra
+  ]
+
+}
+
+
+module "acr" {
+  source = "github.com/la-cc/terraform-azure-acr?ref=1.0.0"
+
+  name                = format("acr%s", var.name)
+  resource_group_name = module.resource_group_infra.name
+  sku                 = var.sku
+  admin_enabled       = var.admin_enabled
+
+  tags = var.tags
+
+  depends_on = [
+    module.resource_group_infra
+  ]
+
+}

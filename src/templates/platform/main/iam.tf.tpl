@@ -28,3 +28,17 @@ resource "azurerm_role_assignment" "main_mi_network_contributor" {
     module.kubernetes
   ]
 }
+
+
+#assign azure key-vault access policies to  managed identity (agentpool)
+resource "azurerm_key_vault_access_policy" "grant_access_policy" {
+
+  key_vault_id = module.key_vault.id
+  tenant_id    = data.azuread_client_config.current.tenant_id
+  object_id    = data.azurerm_kubernetes_cluster.main.kubelet_identity[0].object_id
+
+  certificate_permissions = var.certificate_permissions
+  key_permissions         = var.key_permissions
+  secret_permissions      = var.secret_permissions
+  storage_permissions     = var.storage_permissions
+}

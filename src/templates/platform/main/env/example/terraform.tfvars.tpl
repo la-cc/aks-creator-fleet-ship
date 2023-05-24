@@ -11,6 +11,7 @@ node_pool_max_count  = {{ cluster.node_pool_max_count }}
 vm_size              = "{{ cluster.vm_size }}"
 local_account_disabled = true
 admin_list             = {{ cluster.admin_list | tojson }}
+granted_object_ids = { {{ cluster.granted_object_ids.name }} = "{{ cluster.granted_object_ids.ID }}" }
 
 {% if cluster.node_pools.enable_node_pools %}
 enable_node_pools    = "{{ cluster.node_pools.enable_node_pools |lower }}"

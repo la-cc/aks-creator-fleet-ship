@@ -18,6 +18,10 @@ config_schema = Schema({
                 Optional("enable", default=False): bool,
                 Optional("azure_cloud_zone"): str,
             },
+            Optional("granted_object_ids"): {
+                Optional("name"): str,
+                Optional("ID"): str,
+            },
             # default node-pool
             Optional("node_pool_count", default=3): int,
             Optional("enable_auto_scaling", default=False): bool,
