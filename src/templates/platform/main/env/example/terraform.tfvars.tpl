@@ -1,5 +1,5 @@
-{% if azure_public_dns.enable %}
-azure_cloud_zone       = "{{ azure_public_dns.azure_cloud_zone }}"
+{% if cluster.azure_public_dns.enable %}
+azure_cloud_zone       = "{{ cluster.azure_public_dns.azure_cloud_zone }}"
 {% endif %}
 kubernetes_version     = "{{ cluster.kubernetes_version }}"
 orchestrator_version   = "{{ cluster.orchestrator_version }}"

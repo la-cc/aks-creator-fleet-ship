@@ -20,11 +20,6 @@ config_schema = Schema({
         Optional("name"): str,
     },
 
-    Optional("azure_public_dns"): {
-        Optional("enable", default=False): bool,
-        Optional("azure_cloud_zone"): str,
-    },
-
     "clusters": [
         {
             "name": str,
@@ -49,7 +44,11 @@ config_schema = Schema({
                         Optional("node_count"): int,
                     }
                 ]
-            }
+            },
+            Optional("azure_public_dns"): {
+                Optional("enable", default=False): bool,
+                Optional("azure_cloud_zone"): str,
+            },
         }
     ],
 

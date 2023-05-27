@@ -70,7 +70,7 @@ variable "load_balancer_sku" {
   description = "Specifies the SKU of the Load Balancer used for this Kubernetes Cluster. Possible values are basic and standard. Defaults to standard"
 }
 
-{% if azure_public_dns.enable %}
+{% if cluster.azure_public_dns.enable %}
 variable "azure_cloud_zone" {
 
   type    = string
