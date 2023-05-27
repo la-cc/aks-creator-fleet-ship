@@ -70,7 +70,7 @@ variable "load_balancer_sku" {
   description = "Specifies the SKU of the Load Balancer used for this Kubernetes Cluster. Possible values are basic and standard. Defaults to standard"
 }
 
-{% if cluster.azure_public_dns.enable %}
+{% if azure_public_dns.enable %}
 variable "azure_cloud_zone" {
 
   type    = string
@@ -222,6 +222,32 @@ variable "tags" {
   }
 }
 
+########## Azure AD Group ##########
+variable "display_name" {
+  type        = string
+  default     = ""
+  description = "display_name - (Required) The display name for the group."
+}
+variable "owners" {
+  type        = list(string)
+  default     = []
+  description = <<-EOT
+    (Optional) A set of object IDs of principals that will be granted ownership of the group.
+    Supported object types are users or service principals.
+    By default, the principal being used to execute Terraform is assigned as the sole owner.
+    Groups cannot be created with no owners or have all their owners removed.
+  EOT
+}
+variable "members" {
+  type        = list(string)
+  default     = []
+  description = <<-EOT
+     (Optional) A set of members who should be present in this group.
+     Supported object types are Users, Groups or Service Principals.
+     Cannot be used with the dynamic_membership block.
+  EOT
+}
+
 ########## Azure Container Registries ##########
 
 variable "sku" {
@@ -240,12 +266,6 @@ variable "admin_enabled" {
 
 
 ########## Azure Key Vault ##########
-
-variable "granted_object_ids" {
-
-  type    = map(string)
-  default = {}
-}
 
 variable "network_acls" {
 
@@ -267,40 +287,20 @@ variable "network_acls" {
 
 }
 
+variable "key_vault_admin_object_ids" {
+  type        = list(string)
+  description = "Optional list of object IDs of users or groups who should be Key Vault Administrators. Should only be set, if enable_rbac_authorization is set to true."
+  default     = []
+}
+
 variable "role_definition_name" {
   type        = string
   description = "The Scoped-ID of the Role Definition. Changing this forces a new resource to be created. Conflicts with role_definition_name"
   default     = "Key Vault Administrator"
 }
 
-variable "certificate_permissions" {
-  type        = list(string)
-  description = "Optional list of permission"
-  default = [
-    "Get"
-  ]
-}
-
-variable "key_permissions" {
-  type        = list(string)
-  description = "Optional list of permission"
-  default = [
-    "Get"
-  ]
-}
-
-variable "secret_permissions" {
-  type        = list(string)
-  description = "Optional list of permission"
-  default = [
-    "Get", "List", "Set", "Delete", "Recover", "Purge", "Restore", "Backup"
-  ]
-}
-
-variable "storage_permissions" {
-  type        = list(string)
-  description = "Optional list of permission"
-  default = [
-    "Get"
-  ]
+variable "enable_rbac_authorization" {
+  type        = bool
+  description = "Boolean flag to specify whether Azure Key Vault uses Role Based Access Control (RBAC) for authorization of data actions."
+  default     = true
 }

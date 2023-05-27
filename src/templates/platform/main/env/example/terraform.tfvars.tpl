@@ -1,17 +1,19 @@
-{% if cluster.azure_public_dns.enable %}
-azure_cloud_zone     = "{{ cluster.azure_public_dns.azure_cloud_zone }}"
+{% if azure_public_dns.enable %}
+azure_cloud_zone       = "{{ azure_public_dns.azure_cloud_zone }}"
 {% endif %}
-kubernetes_version   = "{{ cluster.kubernetes_version }}"
-orchestrator_version = "{{ cluster.orchestrator_version }}"
-name                 = "{{ cluster.name }}"
-node_pool_count      = {{ cluster.node_pool_count }}
-enable_auto_scaling  = {{ cluster.enable_auto_scaling |lower }}
-node_pool_min_count  = {{ cluster.node_pool_min_count }}
-node_pool_max_count  = {{ cluster.node_pool_max_count }}
-vm_size              = "{{ cluster.vm_size }}"
+kubernetes_version     = "{{ cluster.kubernetes_version }}"
+orchestrator_version   = "{{ cluster.orchestrator_version }}"
+name                   = "{{ cluster.name }}"
+node_pool_count        = {{ cluster.node_pool_count }}
+enable_auto_scaling    = {{ cluster.enable_auto_scaling |lower }}
+node_pool_min_count    = {{ cluster.node_pool_min_count }}
+node_pool_max_count    = {{ cluster.node_pool_max_count }}
+vm_size                = "{{ cluster.vm_size }}"
 local_account_disabled = true
 admin_list             = {{ cluster.admin_list | tojson }}
-granted_object_ids = { {{ cluster.granted_object_ids.name }} = "{{ cluster.granted_object_ids.ID }}" }
+{% if azuread_group.enable %}
+display_name           = "[PORTDESK]_{{ cluster.name }}_Developer"
+{% endif %}
 
 {% if cluster.node_pools.enable_node_pools %}
 enable_node_pools    = "{{ cluster.node_pools.enable_node_pools |lower }}"

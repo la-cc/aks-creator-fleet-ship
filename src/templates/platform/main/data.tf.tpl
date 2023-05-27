@@ -23,3 +23,29 @@ data "azurerm_kubernetes_cluster" "main" {
     module.kubernetes
   ]
 }
+
+data "azuread_group" "it43_adm" {
+  object_id        = "{{ key_vault_admin_object_ids.ID }}"#{{ key_vault_admin_object_ids.name }}
+  security_enabled = true
+
+}
+
+{% if azuread_group.enable %}
+data "azuread_group" "main" {
+  display_name     = var.display_name
+  security_enabled = true
+
+  depends_on = [
+    azuread_group.main
+  ]
+}
+
+data "azuread_users" "members" {
+  user_principal_names = {{ azuread_group.members | tojson }}
+}
+
+data "azuread_users" "owners" {
+  user_principal_names = {{ azuread_group.owners| tojson }}
+}
+{% endif %}
+

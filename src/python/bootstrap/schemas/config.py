@@ -8,20 +8,28 @@ config_schema = Schema({
         Optional("storage_account_name"): str,
 
     },
+    Optional("azuread_group"): {
+        Optional("enable", default=False): bool,
+        Optional("owners", default=[]): list,
+        Optional("members", default=[]): list,
+    },
+
+    Optional("key_vault_admin_object_ids"): {
+        Optional("enable", default=False): bool,
+        Optional("ID"): str,
+        Optional("name"): str,
+    },
+
+    Optional("azure_public_dns"): {
+        Optional("enable", default=False): bool,
+        Optional("azure_cloud_zone"): str,
+    },
 
     "clusters": [
         {
             "name": str,
             "stage": str,
             Optional("admin_list", default=[]): list,
-            Optional("azure_public_dns"): {
-                Optional("enable", default=False): bool,
-                Optional("azure_cloud_zone"): str,
-            },
-            Optional("granted_object_ids"): {
-                Optional("name"): str,
-                Optional("ID"): str,
-            },
             # default node-pool
             Optional("node_pool_count", default=3): int,
             Optional("enable_auto_scaling", default=False): bool,

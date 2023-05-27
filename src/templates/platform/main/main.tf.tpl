@@ -71,10 +71,11 @@ module "resource_group_infra" {
 module "key_vault" {
   source = "github.com/la-cc/terraform-azure-key-vault?ref=1.0.0"
 
-  name                = format("kv-%s-%s", var.name, "713")
-  resource_group_name = module.resource_group_infra.name
-  network_acls        = var.network_acls
-  granted_object_ids  = var.granted_object_ids
+  name                       = format("kv-%s-%s", var.name, "713")
+  resource_group_name        = module.resource_group_infra.name
+  network_acls               = var.network_acls
+  enable_rbac_authorization  = var.enable_rbac_authorization
+  key_vault_admin_object_ids = [data.azuread_group.it43_adm.object_id]
 
   depends_on = [
     module.resource_group_infra

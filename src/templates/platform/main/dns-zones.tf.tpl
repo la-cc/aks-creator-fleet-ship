@@ -1,4 +1,4 @@
-{% if cluster.azure_public_dns.enable %}
+{% if azure_public_dns.enable %}
 module "dns_zone" {
   source = "github.com/la-cc/terraform-azure-dns-zone?ref=1.0.0"
 
