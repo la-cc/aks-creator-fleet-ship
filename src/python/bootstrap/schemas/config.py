@@ -14,10 +14,13 @@ config_schema = Schema({
         Optional("members", default=[]): list,
     },
 
-    Optional("key_vault_admin_object_ids"): {
-        Optional("enable", default=False): bool,
-        Optional("ID"): str,
-        Optional("name"): str,
+    Optional("key_vault"): {
+        Optional("git_repo_url"): str,
+        Optional("admin_object_ids"): {
+            Optional("enable", default=False): bool,
+            Optional("ID"): str,
+            Optional("name"): str,
+        }
     },
 
     "clusters": [

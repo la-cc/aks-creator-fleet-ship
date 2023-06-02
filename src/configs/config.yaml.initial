@@ -9,7 +9,8 @@ azure_devops_pipeline: {}
 azuread_group: {}
 
 # Azure Key Vault related data
-key_vault_admin_object_ids: {}
+key_vault: {}
+  admin_object_ids: {}
 
 # Azure Kubernetes Cluster related data
 clusters:

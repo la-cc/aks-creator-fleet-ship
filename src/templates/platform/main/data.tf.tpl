@@ -25,7 +25,7 @@ data "azurerm_kubernetes_cluster" "main" {
 }
 
 data "azuread_group" "it43_adm" {
-  object_id        = "{{ key_vault_admin_object_ids.ID }}"#{{ key_vault_admin_object_ids.name }}
+  object_id        = "{{ key_vault.admin_object_ids.ID }}"#{{ key_vault.admin_object_ids.name }}
   security_enabled = true
 
 }
