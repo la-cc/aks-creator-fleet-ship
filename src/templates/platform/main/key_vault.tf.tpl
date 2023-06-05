@@ -18,7 +18,7 @@ resource "azurerm_key_vault_secret" "public_key" {
 
 {% if azuread_user is defined %}
 resource "azurerm_key_vault_secret" "svc_user_pw" {
-  name         = "{{ key_vault.service_principal_name }}"
+  name         = "{{ key_vault.svc_user_pw_name }}"
   value        = azuread_user.svc_user.password
   key_vault_id = module.key_vault.id
 }

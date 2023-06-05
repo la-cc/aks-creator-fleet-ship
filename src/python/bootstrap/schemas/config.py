@@ -17,6 +17,7 @@ config_schema = Schema({
     Optional("key_vault"): {
         Optional("git_repo_url"): str,
         Optional("service_principal_name"): str,
+        Optional("svc_user_pw_name"): str,
         Optional("admin_object_ids"): {
             Optional("enable", default=False): bool,
             Optional("ID"): str,
