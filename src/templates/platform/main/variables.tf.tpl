@@ -222,6 +222,30 @@ variable "tags" {
   }
 }
 
+{% if azuread_user is defined %}
+########## Azure AD User ##########
+variable "azuread_user_name" {
+
+  type    = string
+  default = "{{ azuread_user.name}}"
+
+}
+
+variable "azuread_display_name" {
+
+  type    = string
+  default = "{{ azuread_user.display_name}}"
+
+}
+
+variable "mail_nickname" {
+
+  type    = string
+  default = "{{ azuread_user.mail_nickname}}"
+
+}
+{% endif %}
+
 ########## Azure AD Group ##########
 variable "display_name" {
   type        = string

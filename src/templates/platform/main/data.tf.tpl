@@ -24,11 +24,18 @@ data "azurerm_kubernetes_cluster" "main" {
   ]
 }
 
-data "azuread_group" "it43_adm" {
+data "azuread_group" "it_adm" {
   object_id        = "{{ key_vault.admin_object_ids.ID }}"#{{ key_vault.admin_object_ids.name }}
   security_enabled = true
 
 }
+
+{% if key_vault.service_principal_name is defined %}
+data "azuread_service_principal" "devops_terraform_cicd" {
+
+  display_name = "{{ key_vault.service_principal_name }}"
+}
+{% endif %}
 
 {% if azuread_group.enable %}
 data "azuread_group" "main" {

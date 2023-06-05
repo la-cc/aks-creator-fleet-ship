@@ -75,35 +75,12 @@ module "key_vault" {
   resource_group_name        = module.resource_group_infra.name
   network_acls               = var.network_acls
   enable_rbac_authorization  = var.enable_rbac_authorization
-  key_vault_admin_object_ids = [data.azuread_group.it43_adm.object_id]
+  key_vault_admin_object_ids = [data.azuread_group.it_adm.object_id]
 
   depends_on = [
     module.resource_group_infra
   ]
 
-}
-
-resource "azurerm_key_vault_secret" "url" {
-  name         = "url"
-  value        = "{{ key_vault.git_repo_url }}"
-  key_vault_id = module.key_vault.id
-}
-
-resource "azurerm_key_vault_secret" "private_key" {
-  name         = "sshPrivateKey"
-  value        = base64encode(tls_private_key.main.private_key_pem)
-  key_vault_id = module.key_vault.id
-}
-
-resource "azurerm_key_vault_secret" "public_key" {
-  name         = "sshpublicKey"
-  value        = tls_private_key.main.public_key_openssh
-  key_vault_id = module.key_vault.id
-}
-
-resource "tls_private_key" "main" {
-  algorithm = "RSA"
-  rsa_bits  = 4096
 }
 
 

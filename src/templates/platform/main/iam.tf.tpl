@@ -43,6 +43,16 @@ resource "azurerm_role_assignment" "key_vault_officer" {
   principal_id         = data.azurerm_kubernetes_cluster.main.kubelet_identity[0].object_id
 }
 
+{% if key_vault.service_principal_name is defined %}
+resource "azurerm_role_assignment" "key_vault_officer_sp" {
+
+  scope                = module.key_vault.id
+  role_definition_name = "Key Vault Secrets Officer"
+  principal_id         = data.azuread_service_principal.devops_terraform_cicd.object_id
+}
+{% endif %}
+
+
 {% if azuread_group.enable %}
 resource "azurerm_role_assignment" "key_vault_admin" {
 
