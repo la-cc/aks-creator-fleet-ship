@@ -289,6 +289,14 @@ variable "admin_enabled" {
 }
 
 
+variable "acr_name" {
+
+  type        = string
+  default     = "{{ acr.name }}"
+  description = "(Required) Specifies the name of the container registry. Changing this forces a new resource to be created."
+}
+
+
 ########## Azure Key Vault ##########
 
 variable "network_acls" {
@@ -327,4 +335,10 @@ variable "enable_rbac_authorization" {
   type        = bool
   description = "Boolean flag to specify whether Azure Key Vault uses Role Based Access Control (RBAC) for authorization of data actions."
   default     = true
+}
+
+variable "key_vault_name" {
+  type        = string
+  description = "Specifies the name of the Key Vault. Changing this forces a new resource to be created."
+  default     = "{{ key_vault.name }}"
 }

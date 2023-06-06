@@ -18,6 +18,7 @@ config_schema = Schema({
         Optional("git_repo_url"): str,
         Optional("service_principal_name"): str,
         Optional("svc_user_pw_name"): str,
+        Optional("name"): str,
         Optional("admin_object_ids"): {
             Optional("enable", default=False): bool,
             Optional("ID"): str,
@@ -28,6 +29,9 @@ config_schema = Schema({
         Optional("name"): str,
         Optional("display_name"): str,
         Optional("mail_nickname"): str,
+    },
+    Optional("acr"): {
+        Optional("name"): str,
     },
 
     "clusters": [

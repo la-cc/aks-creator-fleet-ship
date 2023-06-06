@@ -71,7 +71,7 @@ module "resource_group_infra" {
 module "key_vault" {
   source = "github.com/la-cc/terraform-azure-key-vault?ref=1.0.0"
 
-  name                       = format("kv-%s-%s", var.name, "713")
+  name                       = var.key_vault_name
   resource_group_name        = module.resource_group_infra.name
   network_acls               = var.network_acls
   enable_rbac_authorization  = var.enable_rbac_authorization
@@ -87,7 +87,7 @@ module "key_vault" {
 module "acr" {
   source = "github.com/la-cc/terraform-azure-acr?ref=1.0.0"
 
-  name                = format("acr%s", var.name)
+  name                = var.acr_name
   resource_group_name = module.resource_group_infra.name
   sku                 = var.sku
   admin_enabled       = var.admin_enabled
