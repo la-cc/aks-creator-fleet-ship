@@ -21,7 +21,7 @@ mail_nickname          = "{{ azuread_user.mail_nickname }}"
 key_vault_name         = "{{ key_vault.name }}"
 
 
-acr_name = {{ acr.name }}
+acr_name = "{{ acr.name }}"
 
 {% if cluster.node_pools.enable_node_pools %}
 enable_node_pools    = "{{ cluster.node_pools.enable_node_pools |lower }}"
