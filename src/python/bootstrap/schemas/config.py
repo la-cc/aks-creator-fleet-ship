@@ -10,6 +10,7 @@ config_schema = Schema({
     },
     Optional("azuread_group"): {
         Optional("enable", default=False): bool,
+        Optional("name", default="DevOps AAD Group"): str,
         Optional("owners", default=[]): list,
         Optional("members", default=[]): list,
     },
@@ -32,6 +33,12 @@ config_schema = Schema({
     },
     Optional("acr"): {
         Optional("name"): str,
+    },
+
+    Optional("azure_tags"): {
+        Optional("maintainer", default="Platform Team"): str,
+        Optional("owner", default="Platform Team"): str,
+
     },
 
     "clusters": [

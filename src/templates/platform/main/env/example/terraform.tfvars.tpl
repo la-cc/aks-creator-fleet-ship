@@ -12,8 +12,16 @@ vm_size                = "{{ cluster.vm_size }}"
 local_account_disabled = true
 admin_list             = {{ cluster.admin_list | tojson }}
 {% if azuread_group.enable %}
-display_name           = "[PORTDESK]_{{ cluster.name }}_Developer"
+display_name           = "azuread_group.name"
 {% endif %}
+
+azuread_display_name   = "{{ azuread_user.display_name }}"
+azuread_user_name      = "{{ azuread_user.name }}"
+mail_nickname          = "{{ azuread_user.mail_nickname }}"
+key_vault_name         = "{{ key_vault.name }}"
+
+
+acr_name = {{ acr.name }}
 
 {% if cluster.node_pools.enable_node_pools %}
 enable_node_pools    = "{{ cluster.node_pools.enable_node_pools |lower }}"
@@ -41,8 +49,8 @@ node_pools = {
 {% endif %}
 
 tags = {
-  Maintainer  = "Team-X"
-  Owner       = "Team-X"
+  Maintainer  = "{{ azure_tags.maintainer }}"
+  Owner       = "{{ azure_tags.owner }}"
   PoC         = "AKS"
   TF-Managed  = "true"
   Environment = "{{ cluster.name }}-{{ cluster.stage }}"
