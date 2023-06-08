@@ -12,7 +12,7 @@ vm_size                = "{{ cluster.vm_size }}"
 local_account_disabled = true
 admin_list             = {{ cluster.admin_list | tojson }}
 {% if azuread_group.enable %}
-display_name           = "azuread_group.name"
+display_name           = "{{ azuread_group.name }}"
 {% endif %}
 
 azuread_display_name   = "{{ azuread_user.display_name }}"
