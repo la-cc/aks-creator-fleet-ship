@@ -61,10 +61,10 @@ resource "azurerm_role_assignment" "key_vault_admin" {
   principal_id         = data.azuread_group.main.object_id
 }
 
-resource "azurerm_role_assignment" "kubernetes_reader" {
+resource "azurerm_role_assignment" "kubernetes_admin" {
 
   scope                = data.azurerm_kubernetes_cluster.main.id
-  role_definition_name = "Azure Kubernetes Service RBAC Reader"
+  role_definition_name = "Azure Kubernetes Service RBAC Admin"
   principal_id         = data.azuread_group.main.object_id
 }
 
