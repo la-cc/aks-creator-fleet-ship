@@ -53,7 +53,7 @@ resource "azurerm_role_assignment" "key_vault_officer_sp" {
 {% endif %}
 
 
-{% if azuread_group.enable %}
+{% if azuread_group is defined %}
 resource "azurerm_role_assignment" "key_vault_admin" {
 
   scope                = module.key_vault.id

@@ -1,4 +1,4 @@
-{% if azure_devops_pipeline.enable %}
+{% if azure_devops_pipeline is defined %}
 trigger:
   batch: true
   branches:

@@ -1,4 +1,4 @@
-{% if cluster.azure_public_dns.enable %}
+{% if cluster.azure_public_dns is defined %}
 azure_cloud_zone       = "{{ cluster.azure_public_dns.azure_cloud_zone }}"
 {% endif %}
 kubernetes_version     = "{{ cluster.kubernetes_version }}"
@@ -11,7 +11,7 @@ node_pool_max_count    = {{ cluster.node_pool_max_count }}
 vm_size                = "{{ cluster.vm_size }}"
 local_account_disabled = true
 admin_list             = {{ cluster.admin_list | tojson }}
-{% if azuread_group.enable %}
+{% if azuread_group is defined %}
 display_name           = "{{ azuread_group.name }}"
 {% endif %}
 
@@ -23,7 +23,7 @@ key_vault_name         = "{{ key_vault.name }}"
 
 acr_name = "{{ acr.name }}"
 
-{% if cluster.node_pools.enable_node_pools %}
+{% if cluster.node_pools is defined %}
 enable_node_pools    = "{{ cluster.node_pools.enable_node_pools |lower }}"
 
 node_pools = {

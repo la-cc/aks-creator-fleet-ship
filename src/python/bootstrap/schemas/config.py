@@ -3,13 +3,11 @@ from schema import Schema, Optional
 config_schema = Schema({
 
     Optional("azure_backend"): {
-        Optional("enable"): bool,
-        Optional("resource_group_name_backend"): str,
+        Optional("resource_group_name"): str,
         Optional("storage_account_name"): str,
 
     },
     Optional("azuread_group"): {
-        Optional("enable", default=False): bool,
         Optional("name", default="DevOps AAD Group"): str,
         Optional("owners", default=[]): list,
         Optional("members", default=[]): list,
@@ -21,7 +19,7 @@ config_schema = Schema({
         Optional("svc_user_pw_name"): str,
         Optional("name"): str,
         Optional("admin_object_ids"): {
-            Optional("enable", default=False): bool,
+
             Optional("ID"): str,
             Optional("name"): str,
         }
@@ -56,7 +54,6 @@ config_schema = Schema({
             Optional("orchestrator_version", default="1.24.9"): str,
             # additional node-pools
             Optional("node_pools"): {
-                Optional("enable_node_pools"): bool,
                 Optional("pool"): [
                     {
                         Optional("name"): str,
@@ -67,14 +64,12 @@ config_schema = Schema({
                 ]
             },
             Optional("azure_public_dns"): {
-                Optional("enable", default=False): bool,
                 Optional("azure_cloud_zone"): str,
             },
         }
     ],
 
     Optional("azure_devops_pipeline"): {
-        Optional("enable"): bool,
         Optional("library_group"): str,
 
     }

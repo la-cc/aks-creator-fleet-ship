@@ -21,4 +21,4 @@ clusters:
     node_pool_min_count: 2
     node_pool_max_count: 5
     azure_public_dns: {}
-    node_pools: {}
+    #node_pools: {}

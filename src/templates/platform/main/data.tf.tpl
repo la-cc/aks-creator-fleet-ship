@@ -37,7 +37,7 @@ data "azuread_service_principal" "devops_terraform_cicd" {
 }
 {% endif %}
 
-{% if azuread_group.enable %}
+{% if azuread_group is defined %}
 data "azuread_group" "main" {
   display_name     = var.display_name
   security_enabled = true

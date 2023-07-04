@@ -1,4 +1,4 @@
-{% if azuread_group.enable %}
+{% if azuread_group is defined %}
 resource "azuread_group" "main" {
   display_name     = var.display_name
   owners           = data.azuread_users.owners.object_ids
