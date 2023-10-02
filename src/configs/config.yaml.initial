@@ -1,24 +1,54 @@
 ---
-# Azure Backend for Terraform related data
-azure_backend: {}
-
 # Azure Devops Pipeline related data
-azure_devops_pipeline: {}
+azure_devops_pipeline:
+  library_group: <tkc-fleet-config>
 
-# Azure AD related data
-azuread_group: {}
-
-# Azure Key Vault related data
-key_vault: {}
-  admin_object_ids: {}
+azure_tags:
+  maintainer: <"Platform Team">
+  owner: <"Platform Team">
 
 # Azure Kubernetes Cluster related data
 clusters:
-  - name: <valiant>
+  - name: <vengeance>
     stage: <development>
-    enable_auto_scaling: true
-    node_pool_count: 3
-    node_pool_min_count: 2
-    node_pool_max_count: 5
-    azure_public_dns: {}
-    #node_pools: {}
+    kubernetes_version: <1.25.11>
+    orchestrator_version: <1.25.11>
+    enable_auto_scaling: <true>
+    node_pool_count: <2>
+    node_pool_min_count: <2>
+    node_pool_max_count: <5>
+    admin_list: ["8a7...."]
+    authorized_ip_ranges: [
+        <"1.3.5.7/32", #bastion_vm>
+      ]
+    # Azure AD Group related data
+    azuread_group:
+      name: <"Vengeance_Development_Developer">
+      owners: <["platform.engineerl@exmaple.onmicrosoft.com"]>
+      members: <["platform.engineerl@exmaple.onmicrosoft.com"]>
+    azure_vm:
+      jumphost: <true>
+    acr:
+      name: <"acrvengeancedev">
+    # Azure AD User related data
+    azuread_user:
+      name: <"svc_portdesk-vengeance-dev_devops@example.onmicrosoft.com">
+      display_name: <"SVC PortDesk vengeance Development (DevOps)">
+      mail_nickname: <"svc_portdesk-vengeance-dev_devops">
+    # Azure Key Vault related data
+    azure_key_vault:
+      git_repo_url: <git@ssh.dev.azure.com:v3/YOUR_ORGA/vengeance/application>
+      service_principal_name: <"devops-terraform-cicd">
+      svc_user_pw_name: <"svc-vengeance-user-pw">
+      name: <"kv-vengeance-dev-713">
+      admin_object_ids:
+        ID: <"8a70....">
+        name: <"IT_ADM">
+    # Azure Backend for Terraform related data
+    azure_backend:
+      resource_group_name: <rg-vengeance-tf-backend>
+      storage_account_name: <savengeancetfbackend>
+      stage: development
+    # Azure Public DNS related data
+    azure_public_dns:
+      azure_cloud_zone: <vengeance-dev.example.com>
