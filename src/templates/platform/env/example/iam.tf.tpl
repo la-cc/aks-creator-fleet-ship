@@ -29,13 +29,16 @@ resource "azurerm_role_assignment" "main_mi_network_contributor" {
   ]
 }
 
+{% if cluster.acr is defined %}
 resource "azurerm_role_assignment" "acr_pull" {
   principal_id                     = data.azurerm_kubernetes_cluster.main.kubelet_identity[0].object_id
   role_definition_name             = "AcrPull"
   scope                            = module.acr.id
   skip_service_principal_aad_check = true
 }
+{% endif %}
 
+{% if cluster.azure_key_vault is defined %}
 resource "azurerm_role_assignment" "key_vault_officer" {
 
   scope                = module.key_vault.id
@@ -43,7 +46,6 @@ resource "azurerm_role_assignment" "key_vault_officer" {
   principal_id         = data.azurerm_kubernetes_cluster.main.kubelet_identity[0].object_id
 }
 
-{% if key_vault.service_principal_name is defined %}
 resource "azurerm_role_assignment" "key_vault_officer_sp" {
 
   scope                = module.key_vault.id
@@ -53,7 +55,7 @@ resource "azurerm_role_assignment" "key_vault_officer_sp" {
 {% endif %}
 
 
-{% if azuread_group is defined %}
+{% if cluster.azuread_group is defined %}
 resource "azurerm_role_assignment" "key_vault_admin" {
 
   scope                = module.key_vault.id
@@ -70,7 +72,7 @@ resource "azurerm_role_assignment" "kubernetes_admin" {
 
 resource "azurerm_role_assignment" "resource_group_reader" {
 
-  scope                = module.resource_group.id
+  scope                = module.resource_group_platform.id
   role_definition_name = "Reader"
   principal_id         = data.azuread_group.main.object_id
 

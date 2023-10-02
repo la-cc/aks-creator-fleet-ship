@@ -1,4 +1,4 @@
-{% if azuread_user is defined %}
+{% if cluster.azuread_user is defined %}
 resource "random_password" "password" {
   length = 24
 }

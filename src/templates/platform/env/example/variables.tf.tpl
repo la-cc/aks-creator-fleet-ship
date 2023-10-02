@@ -64,6 +64,15 @@ variable "local_account_disabled" {
   EOT
 }
 
+variable "authorized_ip_ranges" {
+
+  type        = list(string)
+  default     = ["0.0.0.0/0"]
+  description = <<-EOT
+    Set of authorized IP ranges to allow access to API server, e.g. ["198.51.100.0/24"].
+    EOT
+}
+
 variable "load_balancer_sku" {
   type        = string
   default     = "basic"
@@ -222,7 +231,7 @@ variable "tags" {
   }
 }
 
-{% if azuread_user is defined %}
+{% if cluster.azuread_user is defined %}
 ########## Azure AD User ##########
 variable "azuread_user_name" {
 

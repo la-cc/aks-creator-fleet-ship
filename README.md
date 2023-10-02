@@ -30,12 +30,12 @@ To install `igor` just download the `igor.sh` and store it in your `$PATH` like 
 Running `igor` without configuration will launch a busybox image. In order to use the tool with the AKS Creator image,
 a configuration file is required.
 
-> **_NOTE:_** You can get the recent tag from [la-cc/aks-creator-core](https://github.com/la-cc/aks-creator-core/tags)
+> **_NOTE:_** You can get the recent tag from [la-cc/aks-creator-core](https://github.com/la-cc/aks-creator-fleet-ship/tags)
 
 Open the file `.igor.sh` in your preferred editor and use the following settings to configure `igor`:
 
     # select docker image
-    IGOR_DOCKER_IMAGE=ghcr.io/la-cc/aks-creator-core:0.0.2
+    IGOR_DOCKER_IMAGE=ghcr.io/la-cc/aks-creator-fleet-ship:0.0.X
     IGOR_DOCKER_COMMAND=                                  # run this command inside the docker container
     IGOR_DOCKER_PULL=0                                    # force pulling the image before starting the container (0/1)
     IGOR_DOCKER_RM=1                                      # remove container on exit (0/1)
@@ -123,82 +123,82 @@ To do so simply execute the script (from inside the aks-creator-core container):
 If go through the step [0. Create a Azure Backend for Terraform State (Optional)](#ConfigAzureBackend) then you need to execute the following commands (from inside the aks-creator-core container or local terraform binary):
 
     terraform init
-    terraform select workspace <STAGE>
-    terraform plan -var-file=env/<STAGE>/terraform.tfvars
+    terraform plan -var-file=terraform.tfvars
 
 If the plan is fine for you, then apply it with:
 
-    terraform apply -var-file=env/<STAGE>/terraform.tfvars -auto-approve
+    terraform apply -var-file=terraform.tfvars -auto-approve
 
 ### 4.2 Terraform Apply + Local Backend
 
 If you don't create azure backend then execute the following commands (from inside the aks-creator-core container or local terraform binary):
 
     terraform init
-    #terraform version < 1.4.*
-    terraform workspace new <STAGE>
-    #terraform version  >= 1.4.*
-    terraform workspace select -or-create <STAGE>
-    terraform plan -var-file=env/<STAGE>/terraform.tfvars
+    terraform plan -var-file=terraform.tfvars
 
 If the plan is fine for you, then apply it with:
 
-    terraform apply -var-file=env/<STAGE>/terraform.tfvars -auto-approve
+    terraform apply -var-file=terraform.tfvars -auto-approve
 
 ## <a id="ConfigOptions"></a>00. Configuration Options for `config.yaml`
 
 The following examples show the possible configuration of the templating. The used module itself can be further adjusted or overwritten.
 
-### Minimum necessary configuration
+### Configuration:
 
 ```
 ---
-# Azure Backend for Terraform related data
-azure_backend: {}
-
-# Azure Kubernetes Cluster related data
-clusters:
-  - name: <valiant>
-    stage: <development>
-    azure_public_dns: {}
-    node_pools: {}
-
-# Azure Devops Pipeline related data
-azure_devops_pipeline: {}
-```
-
-### Maximum possible configuration:
-
-```
----
-# Azure Backend for Terraform related data
-azure_backend:
-  enable: true
-  resource_group_name_backend: <"rg-tfstate-backend-example">
-  storage_account_name: <"satfstatebackendexample">
-
-# Azure Kubernetes Cluster related data
-clusters:
-  - name: <valiant>
-    stage: <development>
-    admin_list: ["8a7sdwd", "47243892"]
-    azure_public_dns:
-      enable: true
-      azure_cloud_zone: <"your-domain.de">
-    node_pool_count: <3>
-    vm_size: <"Standard_B4ms">
-    kubernetes_version: <"1.24.9">
-    orchestrator_version: <"1.24.9">
-    node_pools:
-      enable_node_pools: true
-      pool:
-        - name: <"internal">
-          min_count: <1>
-          max_count: <3>
-          node_count: <2>
-
 # Azure Devops Pipeline related data
 azure_devops_pipeline:
-  enable: <true>
-  library_group: <tkc-fleet>
+  library_group: <tkc-fleet-config>
+
+azure_tags:
+  maintainer: <"Platform Team">
+  owner: <"Platform Team">
+
+# Azure Kubernetes Cluster related data
+clusters:
+  - name: <vengeance>
+    stage: <development>
+    kubernetes_version: <1.25.11>
+    orchestrator_version: <1.25.11>
+    enable_auto_scaling: <true>
+    node_pool_count: <2>
+    node_pool_min_count: <2>
+    node_pool_max_count: <5>
+    admin_list: ["8a7...."]
+    authorized_ip_ranges: [
+        <"1.3.5.7/32", #bastion_vm>
+      ]
+    # Azure AD Group related data
+    azuread_group:
+      name: <"Vengeance_Development_Developer">
+      owners: <["platform.engineerl@exmaple.onmicrosoft.com"]>
+      members: <["platform.engineerl@exmaple.onmicrosoft.com"]>
+    azure_vm:
+      jumphost: <true>
+    acr:
+      name: <"acrvengeancedev">
+    # Azure AD User related data
+    azuread_user:
+      name: <"svc_portdesk-vengeance-dev_devops@example.onmicrosoft.com">
+      display_name: <"SVC PortDesk vengeance Development (DevOps)">
+      mail_nickname: <"svc_portdesk-vengeance-dev_devops">
+    # Azure Key Vault related data
+    azure_key_vault:
+      git_repo_url: <git@ssh.dev.azure.com:v3/YOUR_ORGA/vengeance/application>
+      service_principal_name: <"devops-terraform-cicd">
+      svc_user_pw_name: <"svc-vengeance-user-pw">
+      name: <"kv-vengeance-dev-713">
+      admin_object_ids:
+        ID: <"8a70....">
+        name: <"IT_ADM">
+    # Azure Backend for Terraform related data
+    azure_backend:
+      resource_group_name: <rg-vengeance-tf-backend>
+      storage_account_name: <savengeancetfbackend>
+      stage: development
+    # Azure Public DNS related data
+    azure_public_dns:
+      azure_cloud_zone: <vengeance-dev.example.com>
 ```

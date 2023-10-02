@@ -3,25 +3,30 @@ azure_cloud_zone       = "{{ cluster.azure_public_dns.azure_cloud_zone }}"
 {% endif %}
 kubernetes_version     = "{{ cluster.kubernetes_version }}"
 orchestrator_version   = "{{ cluster.orchestrator_version }}"
-name                   = "{{ cluster.name }}"
+name                   = "{{ cluster.name }}-{{ cluster.stage }}"
 node_pool_count        = {{ cluster.node_pool_count }}
 enable_auto_scaling    = {{ cluster.enable_auto_scaling |lower }}
 node_pool_min_count    = {{ cluster.node_pool_min_count }}
 node_pool_max_count    = {{ cluster.node_pool_max_count }}
 vm_size                = "{{ cluster.vm_size }}"
 local_account_disabled = true
+load_balancer_sku      = "standard"
+authorized_ip_ranges   = {{ cluster.authorized_ip_ranges | tojson }}
 admin_list             = {{ cluster.admin_list | tojson }}
-{% if azuread_group is defined %}
-display_name           = "{{ azuread_group.name }}"
+{% if cluster.azuread_group is defined %}
+display_name           = "{{ cluster.azuread_group.name }}"
 {% endif %}
 
-azuread_display_name   = "{{ azuread_user.display_name }}"
-azuread_user_name      = "{{ azuread_user.name }}"
-mail_nickname          = "{{ azuread_user.mail_nickname }}"
-key_vault_name         = "{{ key_vault.name }}"
+{% if cluster.azuread_user is defined %}
+azuread_display_name   = "{{ cluster.azuread_user.display_name }}"
+azuread_user_name      = "{{ cluster.azuread_user.name }}"
+mail_nickname          = "{{ cluster.azuread_user.mail_nickname }}"
+{% endif %}
+{% if cluster.azure_key_vault is defined %}
+key_vault_name         = "{{ cluster.azure_key_vault.name }}"
+{% endif %}
 
-
-acr_name = "{{ acr.name }}"
+acr_name = "{{ cluster.acr.name }}"
 
 {% if cluster.node_pools is defined %}
 enable_node_pools    = "{{ cluster.node_pools.enable_node_pools |lower }}"
@@ -53,5 +58,5 @@ tags = {
   Owner       = "{{ azure_tags.owner }}"
   PoC         = "AKS"
   TF-Managed  = "true"
-  Environment = "{{ cluster.name }}-{{ cluster.stage }}"
+  Environment = "{{ cluster.stage }}"
 }
