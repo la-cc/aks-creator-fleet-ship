@@ -53,6 +53,30 @@ node_pools = {
 
 {% endif %}
 
+{% if cluster.grafana_aad_app is defined %}
+grafana_aad_app = {
+{%- for app in cluster.grafana_aad_app %}
+  "{{ app.name }}" = {
+    app_owners                   = {{ app.app_owners | tojson }}
+    app_role_assignment_required = false
+    display_name                 = "{{ app.display_name }}"
+    logout_url                   = "{{ app.logout_url }}"
+    redirect_uris                = {{ app.redirect_uris | tojson }}
+    {%- if app.roles %}
+    roles                        = {
+      {%- for role in app.roles %}
+      "{{ role.name }}" = {
+        app_role_id         = "{{ role.id }}"
+        principal_object_id = "{{ role.object_id }}"
+      }{% if not loop.last %},{% endif %}
+      {%- endfor %}
+    }
+    {%- endif %}
+  }{% if not loop.last %},{% endif %}
+{%- endfor %}
+}
+{% endif %}
+
 tags = {
   Maintainer  = "{{ azure_tags.maintainer }}"
   Owner       = "{{ azure_tags.owner }}"

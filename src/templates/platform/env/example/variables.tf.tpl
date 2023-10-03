@@ -348,3 +348,98 @@ variable "key_vault_name" {
   type        = string
   description = "Specifies the name of the Key Vault. Changing this forces a new resource to be created."
 }
+
+########## Azure AD Grafana Enterprise App + App Registration ##########
+
+variable "grafana_aad_app" {
+  type = map(object({
+    display_name                 = string
+    redirect_uris                = list(string)
+    logout_url                   = string
+    app_role_assignment_required = bool
+    app_owners                   = list(string)
+    roles = map(object({
+      app_role_id         = string
+      principal_object_id = string
+    }))
+
+  }))
+
+  default = {}
+}
+
+
+variable "grafana_app_roles" {
+  type = map(object({
+    allowed_member_types = list(string)
+    description          = string
+    display_name         = string
+    enabled              = bool
+    id                   = string
+    value                = string
+
+
+  }))
+  default = {
+
+    "grafana_viewer" = {
+      allowed_member_types = ["User"]
+      description          = "Grafana read only Users"
+      display_name         = "Grafana Viewer"
+      enabled              = true
+      id                   = "5ece0e92-30f6-4c31-8c94-e7195c20f668"
+      value                = "Viewer"
+    },
+
+    "grafana_editor" = {
+      allowed_member_types = ["User"]
+      description          = "Grafana Editor Users"
+      display_name         = "Grafana Editor"
+      enabled              = true
+      id                   = "2b2d3ad4-1c78-45db-a077-909f755c36aa"
+      value                = "Editor"
+    },
+
+    "grafana_admin" = {
+      allowed_member_types = ["User"]
+      description          = "Grafana admin Users"
+      display_name         = "Grafana Admin"
+      enabled              = true
+      id                   = "e15be93c-edc1-4b89-ad19-c5f143de6ebd"
+      value                = "Admin"
+    }
+
+  }
+
+  description = <<-EOT
+    List of app_roles to configure app_role in for a aad application.
+
+    Example:
+
+    default = {
+
+      "grafana_viewer" = {
+        allowed_member_types = ["User"]
+        description          = "Grafana read only Users"
+        display_name         = "Grafana Viewer"
+        enabled              = true
+        id                   = "5ece0e92-30f6-4c31-8c94-e7195c20f668"
+        value                = "Viewer"
+      },
+
+      "grafana_editor" = {
+        allowed_member_types = ["User"]
+        description          = "Grafana Editor Users"
+        display_name         = "Grafana Editor"
+        enabled              = true
+        id                   = "2b2d3ad4-1c78-45db-a077-909f755c36aa"
+        value                = "Editor"
+      }
+
+    }
+
+   Explanation:
+   A collection of app_role blocks as documented below. For more information see official documentation on Application Roles.
+
+  EOT
+}

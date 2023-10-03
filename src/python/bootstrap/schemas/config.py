@@ -46,6 +46,9 @@ config_schema = Schema({
             Optional("azure_vm"): {
                 Optional("jumphost", True): bool,
             },
+            Optional("azure_public_dns"): {
+                Optional("azure_cloud_zone"): str,
+            },
             Optional("admin_list", default=[]): list,
             Optional("authorized_ip_ranges", default=["0.0.0.0/0"]): list,
             # default node-pool
@@ -67,9 +70,22 @@ config_schema = Schema({
                     }
                 ]
             },
-            Optional("azure_public_dns"): {
-                Optional("azure_cloud_zone"): str,
-            },
+            Optional("grafana_aad_app"): [
+                {
+                    Optional("name"): str,
+                    Optional("display_name"): str,
+                    Optional("app_owners"): [str],
+                    Optional("logout_url"): str,
+                    Optional("redirect_uris"): [str],
+                    Optional("roles"): [
+                        {
+                            Optional("name"): str,
+                            Optional("id"): str,
+                            Optional("object_id"): str
+                        }
+                    ]
+                }
+            ],
         }
     ],
 
