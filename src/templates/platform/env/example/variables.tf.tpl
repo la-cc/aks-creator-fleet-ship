@@ -348,9 +348,8 @@ variable "key_vault_name" {
   type        = string
   description = "Specifies the name of the Key Vault. Changing this forces a new resource to be created."
 }
-
+{% if cluster.grafana_aad_app is defined %}
 ########## Azure AD Grafana Enterprise App + App Registration ##########
-
 variable "grafana_aad_app" {
   type = map(object({
     display_name                 = string
@@ -443,3 +442,4 @@ variable "grafana_app_roles" {
 
   EOT
 }
+{% endif %}
