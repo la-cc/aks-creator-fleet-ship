@@ -58,7 +58,7 @@ grafana_aad_app = {
 {%- for app in cluster.grafana_aad_app %}
   "{{ app.name }}" = {
     app_owners                   = {{ app.app_owners | tojson }}
-    app_role_assignment_required = false
+    app_role_assignment_required = true
     display_name                 = "{{ app.display_name }}"
     logout_url                   = "{{ app.logout_url }}"
     redirect_uris                = {{ app.redirect_uris | tojson }}
