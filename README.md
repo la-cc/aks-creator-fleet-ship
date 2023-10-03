@@ -170,6 +170,18 @@ clusters:
     authorized_ip_ranges: [
         <"1.3.5.7/32", #bastion_vm>
       ]
+    grafana_aad_app:
+      - name: <"grafana_aks_development">
+        display_name: <"Grafana Vengeance Developmenr">
+        app_owners:
+          <- "101e7...">
+        logout_url: <"https://google.de">
+        redirect_uris:
+          - <"https://grafana.vengeance-dev.hpa-cloud.com/login/azuread">
+        roles:
+          - name: <"admin_it">
+            id: <"1dc...">
+            object_id: "8a7042f2-9566-4adf-b9cd-272f39837378" #[PORTDESK]_IT43_ADMIN
     # Azure AD Group related data
     azuread_group:
       name: <"Vengeance_Development_Developer">
