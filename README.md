@@ -181,7 +181,7 @@ clusters:
         roles:
           - name: <"admin_it">
             id: <"1dc...">
-            object_id: "8a7042f2-9566-4adf-b9cd-272f39837378" #[PORTDESK]_IT43_ADMIN
+            object_id: <"8a70...." >#IT_ADMIN
     # Azure AD Group related data
     azuread_group:
       name: <"Vengeance_Development_Developer">
