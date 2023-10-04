@@ -30,7 +30,7 @@ To install `igor` just download the `igor.sh` and store it in your `$PATH` like 
 Running `igor` without configuration will launch a busybox image. In order to use the tool with the AKS Creator image,
 a configuration file is required.
 
-> **_NOTE:_** You can get the recent tag from [la-cc/aks-creator-core](https://github.com/la-cc/aks-creator-fleet-ship/tags)
+> **_NOTE:_** You can get the recent tag from [la-cc/aks-creator-fleet-ship](https://github.com/la-cc/aks-creator-fleet-ship/tags)
 
 Open the file `.igor.sh` in your preferred editor and use the following settings to configure `igor`:
 
