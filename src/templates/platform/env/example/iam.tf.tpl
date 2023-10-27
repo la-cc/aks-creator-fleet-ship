@@ -60,28 +60,28 @@ resource "azurerm_role_assignment" "key_vault_admin" {
 
   scope                = module.key_vault.id
   role_definition_name = "Key Vault Administrator"
-  principal_id         = data.azuread_group.main.object_id
+  principal_id         = azuread_group.main.object_id
 }
 
 resource "azurerm_role_assignment" "kubernetes_admin" {
 
   scope                = data.azurerm_kubernetes_cluster.main.id
   role_definition_name = "Azure Kubernetes Service RBAC Admin"
-  principal_id         = data.azuread_group.main.object_id
+  principal_id         = azuread_group.main.object_id
 }
 
 resource "azurerm_role_assignment" "resource_group_reader" {
 
   scope                = module.resource_group_platform.id
   role_definition_name = "Reader"
-  principal_id         = data.azuread_group.main.object_id
+  principal_id         = azuread_group.main.object_id
 
 }
 resource "azurerm_role_assignment" "resource_group_infra_reader" {
 
   scope                = module.resource_group_infra.id
   role_definition_name = "Reader"
-  principal_id         = data.azuread_group.main.object_id
+  principal_id         = azuread_group.main.object_id
 
 }
 

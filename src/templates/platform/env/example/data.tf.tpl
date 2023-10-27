@@ -38,14 +38,6 @@ data "azuread_service_principal" "devops_terraform_cicd" {
 {% endif %}
 
 {% if cluster.azuread_group is defined %}
-data "azuread_group" "main" {
-  display_name     = var.display_name
-  security_enabled = true
-
-  depends_on = [
-    azuread_group.main
-  ]
-}
 
 data "azuread_users" "members" {
   user_principal_names = {{ cluster.azuread_group.members | tojson }}
