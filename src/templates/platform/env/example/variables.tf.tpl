@@ -5,7 +5,7 @@ variable "name" {
 variable "orchestrator_version" {
 
   type    = string
-  default = "1.24.9"
+  default = "1.25.11"
   description = <<-EOT
 
   (Optional) Version of Kubernetes used for the Agents.
@@ -19,7 +19,7 @@ variable "orchestrator_version" {
 
 variable "kubernetes_version" {
   type    = string
-  default = "1.24.9"
+  default = "1.25.11"
   description = <<-EOT
 
   (Optional) Version of Kubernetes specified when creating the AKS managed cluster.
