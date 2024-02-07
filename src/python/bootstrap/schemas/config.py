@@ -44,7 +44,7 @@ config_schema = Schema({
                 }
             },
             Optional("azure_vm"): {
-                Optional("jumphost", True): bool,
+                Optional("jumphost"): bool,
             },
             Optional("azure_public_dns"): {
                 Optional("azure_cloud_zone"): str,

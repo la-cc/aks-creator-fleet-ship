@@ -20,7 +20,7 @@ resource "azurerm_key_vault_secret" "private_key" {
 }
 
 resource "azurerm_key_vault_secret" "public_key" {
-  name         = "sshpublicKey"
+  name         = "sshPublicKey"
   value        = tls_private_key.main.public_key_openssh
   key_vault_id = module.key_vault.id
 

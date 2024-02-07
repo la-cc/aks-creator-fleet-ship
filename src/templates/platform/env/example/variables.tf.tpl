@@ -134,6 +134,13 @@ variable "network_policy" {
   description = "(Optional) Sets up network policy to be used with Azure CNI. Network policy allows us to control the traffic flow between pods. Currently supported values are calico and azure. Changing this forces a new resource to be created."
 }
 
+variable "azure_policy_enabled" {
+  type        = bool
+  default     = true
+  description = "Enable Azure Policy on the Kubernetes Cluster"
+
+}
+
 variable "node_pool_profile_name" {
   type        = string
   default     = "default"
@@ -184,6 +191,13 @@ variable "node_pool_max_count" {
     EOT
 }
 
+variable "node_pool_max_surge" {
+  type        = string
+  default     = "30%"
+  description = "(Required) The maximum number or percentage of nodes which will be added to the Node Pool size during an upgrade."
+
+}
+
 
 variable "enable_node_pools" {
 
@@ -209,6 +223,8 @@ variable "node_pools" {
     max_count              = number
     min_count              = number
     node_count             = number
+    max_surge              = string
+
   }))
 
   description = <<-EOT

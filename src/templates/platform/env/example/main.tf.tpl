@@ -23,7 +23,7 @@ module "network" {
 }
 
 module "kubernetes" {
-  source = "github.com/Hamburg-Port-Authority/terraform-azure-kubernetes?ref=1.1.0"
+  source = "github.com/Hamburg-Port-Authority/terraform-azure-kubernetes?ref=1.5.0"
 
   aks_name               = format("aks-%s", var.name)
   resource_group_name    = module.resource_group_platform.name
@@ -39,6 +39,8 @@ module "kubernetes" {
   node_pool_count        = var.node_pool_count
   node_pool_min_count    = var.node_pool_min_count
   node_pool_max_count    = var.node_pool_max_count
+  node_pool_max_surge    = var.node_pool_max_surge
+  azure_policy_enabled   = var.azure_policy_enabled
   network_policy         = var.network_policy
   network_plugin         = var.network_plugin
   enable_node_pools      = var.enable_node_pools
